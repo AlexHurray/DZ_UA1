@@ -1,4 +1,5 @@
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 import java.util.concurrent.TimeUnit;
 
@@ -7,10 +8,11 @@ public class BaseRunner {
     public WebDriver driver;
     public String browserName = System.getProperty("browser");
     public String baseUrl;
+    public String tinkoffUrl = "https://www.tinkoff.ru";
+    public WebDriverWait wait;
 
     @BeforeClass(alwaysRun = true)
     public void setUp(){
-
         if (tl.get() != null) {
             driver = tl.get();
         } else {
@@ -18,8 +20,9 @@ public class BaseRunner {
             tl.set(driver);
         }
         driver.manage().window().maximize();
-        baseUrl = "https://www.tinkoff.ru/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        baseUrl = "http://www.google.ru";
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 20);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             driver.quit();
