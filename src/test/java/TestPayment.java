@@ -28,6 +28,7 @@ public class TestPayment extends BaseRunner {
         newWindowsSet.removeAll(oldWindowsSet);
         String newWindowHandle = newWindowsSet.iterator().next();
         driver.switchTo().window(newWindowHandle);
+        waitPageLoad();
 
         driver.findElement(By.xpath("//div[@id='x48761']//a[@href='/payments/' and @data-qa-file='Link']/span")).click();
         driver.findElement(By.xpath("//input[@id='']")).click();
@@ -67,6 +68,7 @@ public class TestPayment extends BaseRunner {
         newWindowsSet.removeAll(oldWindowsSet);
         String newWindowHandle = newWindowsSet.iterator().next();
         driver.switchTo().window(newWindowHandle);
+        waitPageLoad();
 
         driver.findElement(By.cssSelector("div#x48761 a[href='/payments/'][data-qa-file='Link'] > span")).click();
         driver.findElement(By.cssSelector("div#search-and-pay-container input[id]")).click();
@@ -187,5 +189,9 @@ public class TestPayment extends BaseRunner {
                 ;
 
         ((JavascriptExecutor)driver).executeScript(script, element);
+    }
+
+    private void waitPageLoad(){
+        wait.until(d -> ((JavascriptExecutor)d).executeScript("return document.readyState").equals("complete"));
     }
 }

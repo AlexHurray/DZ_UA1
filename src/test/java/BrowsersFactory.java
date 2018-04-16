@@ -13,11 +13,8 @@ public enum  BrowsersFactory {
         public WebDriver create() {
             updateProperty("chrome");
 
-            // Disable notifications
-            Map<String, Object> prefs = new HashMap<String, Object>();
-            prefs.put("profile.default_content_setting_values.notifications", 2);
             ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("prefs", prefs);
+            options.addArguments("--disable-notifications");
 
             return new ChromeDriver(options);
         }
@@ -26,11 +23,8 @@ public enum  BrowsersFactory {
         public WebDriver create() {
             updateProperty("firefox");
 
-            // Disable notifications
-            FirefoxProfile ffprofile = new FirefoxProfile();
-            ffprofile.setPreference("dom.webnotifications.enabled", false);
             FirefoxOptions options = new FirefoxOptions();
-            options.setProfile(ffprofile);
+            options.addPreference("dom.webnotifications.enabled", false);
 
             return new FirefoxDriver(options);
         }
